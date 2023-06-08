@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
 import { useFetching } from '../../../hooks/useFetching'
 import { IPost } from '../../../interface/posts.interface.ts'
-import { IUser } from '../../../interface/users.interafce.tsx'
+import { IUser } from '../../../interface/users.interface.tsx'
 import { PostService } from '../../../service/posts.service'
 import { UserService } from '../../../service/user.service.ts'
-import { OnePost } from './OnePost/OnePost.tsx'
+import { OnePost } from './PosrItem/OnePost.tsx'
 
 import { Loader } from '../../UI/Loader/Loader.tsx'
 import { Select } from '../../UI/Select/Select.tsx'
@@ -21,12 +21,7 @@ export const AllPosts = () => {
     setData: setPostsByUserId,
   } = useFetching<IPost>(() => PostService.getAll())
 
-  const {
-    fetching: fetchingUsers,
-    data: users,
-    error: errosUsers,
-    isLoading: isLoadingUsers,
-  } = useFetching<IUser>(() => UserService.getAll())
+  const { fetching: fetchingUsers, data: users } = useFetching<IUser>(() => UserService.getAll())
 
   const {
     fetching: fetchingUserPosts,
@@ -36,13 +31,16 @@ export const AllPosts = () => {
   } = useFetching<IPost>(() => UserService.getUserPosts(currentUser?.id))
 
   useEffect(() => {
-    fetchingPosts()
     fetchingUsers()
   }, [])
 
   useEffect(() => {
-    if (!currentUser?.id) return
-    fetchingUserPosts()
+    if (!currentUser?.id) {
+      fetchingPosts()
+      return
+    }
+
+    fetchingUserPosts('Посты пользователя получены')
   }, [currentUser])
 
   useEffect(() => {
@@ -59,21 +57,19 @@ export const AllPosts = () => {
         <div className="container">
           <div className="posts__controls container container-controls">
             <span>Фильтрация постов по пользователю: </span>
-            <Select
-              setCurrentUser={setCurrentUser}
-              currentUser={currentUser}
-              users={users}
-              error={errosUsers}
-              isLoading={isLoadingUsers}
-            />
+            <Select setCurrentUser={setCurrentUser} currentUser={currentUser} users={users} />
           </div>
 
           {isLoadingPosts && <Loader />}
           {isLoadingUserPosts && <Loader />}
-          {errorPosts && <p>{errorPosts}</p>}
-          {errosUserPosts && <p>{errosUserPosts}</p>}
+          {errorPosts && (
+            <p className="error">
+              {errorPosts}, <br /> попробуйте перезагрузить страницу
+            </p>
+          )}
+          {errosUserPosts && <p className="error">{errosUserPosts}</p>}
 
-          <div className="posts__list">
+          <div className="posts__list animate">
             {posts.map(item => {
               return <OnePost key={item.id} {...item} />
             })}
@@ -81,7 +77,7 @@ export const AllPosts = () => {
         </div>
       </div>
 
-      <span className="posts__total">
+      <span className="total">
         Всего постов: <span>{posts && posts.length}</span>
       </span>
     </>

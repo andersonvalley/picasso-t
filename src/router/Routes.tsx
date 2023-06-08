@@ -1,9 +1,9 @@
 import { Navigate } from 'react-router-dom'
-import { PostById } from '../pages/PostById/PostById'
-import { Posts } from '../pages/Posts/Posts'
+import { PostByIdPage } from '../pages/PostById/PostByIdPage'
+import { PostsPage } from '../pages/Posts/PostsPage'
 
 export const AppRoutes = [
-  { path: '/', element: <Posts /> },
-  { path: '/posts/:id', element: <PostById /> },
+  { path: '/', element: <PostsPage /> },
+  { path: '/posts/:id', element: <PostByIdPage /> },
   { path: '*', element: <Navigate to="/" replace /> },
 ]

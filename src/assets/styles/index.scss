@@ -1,7 +1,9 @@
 :root {
   --color: rgba(35, 35, 35, 0.87);
   --bg: #ffffff;
-  --accent-color: rgba(173, 39, 115, 0.45);
+  --bg-accent: #eee;
+  --accent-color: teal;
+  --accent-color-hover: darkcyan;
 }
 
 * {
@@ -47,6 +49,12 @@ button {
   border: none;
   cursor: pointer;
   background-color: transparent;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+input,
+textarea {
+  font-family: 'Courier New', Courier, monospace;
 }
 
 .container {
@@ -61,5 +69,61 @@ button {
 
   @media (max-width: 500px) {
     padding: 0 6px;
+  }
+}
+
+.error {
+  text-align: center;
+  display: block;
+  margin: 20px 0;
+}
+
+.total {
+  text-align: center;
+  display: block;
+  margin: 20px 0;
+
+  span {
+    font-weight: 600;
+  }
+}
+
+.animate {
+  top: 50px;
+  position: relative;
+  animation: animateTop infinite alternate forwards;
+  animation-timing-function: ease-in-out;
+  animation-duration: 600ms;
+  animation-iteration-count: 1;
+}
+
+@keyframes animateTop {
+  to {
+    top: 0;
+  }
+}
+
+.btn {
+  padding: 10px 30px;
+  font-weight: 600;
+  font-size: 1.8rem;
+  border-radius: 10px;
+  margin: 0 auto;
+  margin-bottom: 30px;
+  display: block;
+  transition: all 20ms ease-in-out;
+
+  &:hover {
+    background-color: var(--bg-accent);
+  }
+
+  &-send {
+    background-color: var(--accent-color);
+    color: #fff;
+    width: 100%;
+
+    &:hover {
+      background-color: var(--accent-color-hover);
+    }
   }
 }

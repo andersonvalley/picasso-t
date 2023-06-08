@@ -1,6 +1,6 @@
-import {AxiosResponse} from 'axios'
-import {instance} from '../api'
-import {IPost} from '../interface/posts.interface'
+import { AxiosResponse } from 'axios'
+import { instance } from '../api'
+import { IPost } from '../interface/posts.interface'
 
 export class PostService {
   static async getAll(): Promise<AxiosResponse<IPost[]>> {
@@ -8,8 +8,13 @@ export class PostService {
     return response
   }
 
-  static async getById(id: number) {
-    const response = await instance<IPost[]>(`/posts/${id}`)
+  static async getById(id: string | undefined): Promise<AxiosResponse<IPost[]>> {
+    const response = await instance(`/posts/${id}`)
+    return response
+  }
+
+  static async getCommentsByIdPost(id: string | undefined): Promise<AxiosResponse<IPost[]>> {
+    const response = await instance(`/posts/${id}/comments`)
     return response
   }
 }

@@ -4,13 +4,13 @@
   &__current {
     border-radius: 5px;
     padding: 5px 10px;
-    background-color: teal;
+    background-color: var(--accent-color);
     color: #fff;
     cursor: pointer;
     transition: all 200ms ease-in-out;
 
     &:hover {
-      background-color: darkcyan;
+      background-color: var(--accent-color-hover);
     }
 
     &:active {
@@ -31,6 +31,14 @@
     top: 40px;
     background-color: #fff;
     z-index: 1;
+    height: 245px;
+    overflow-y: scroll;
+    z-index: 3;
+
+    @media (max-width: 600px) {
+      left: -100px;
+      top: 50px;
+    }
   }
 
   &__item {
@@ -48,4 +56,5 @@
   position: fixed;
   inset: 0;
   background-color: #17171754;
+  z-index: 2;
 }

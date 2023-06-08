@@ -1,12 +1,13 @@
-import { useState } from 'react'
 import axios, { AxiosResponse } from 'axios'
+import { useState } from 'react'
+import { notify } from '../utils/notification'
 
 export const useFetching = <T = [],>(callback: () => Promise<AxiosResponse<T[]>>) => {
   const [data, setData] = useState<T[]>([])
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
 
-  const fetching = async () => {
+  const fetching = async (successMessage?: string) => {
     setIsLoading(true)
     try {
       const response = await callback()
@@ -16,9 +17,12 @@ export const useFetching = <T = [],>(callback: () => Promise<AxiosResponse<T[]>>
       }
 
       setData(response.data)
+
+      if (successMessage) notify(successMessage)
     } catch (error) {
       if (axios.isAxiosError(error)) {
         setError(error?.message)
+        notify(error?.message)
       }
     } finally {
       setIsLoading(false)

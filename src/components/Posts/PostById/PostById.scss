@@ -1,0 +1,44 @@
+.author {
+  display: flex;
+  justify-content: space-between;
+
+  &__info {
+    display: flex;
+    align-items: center;
+  }
+
+  &__avatar {
+    border-radius: 50px;
+    width: 50px;
+    height: 50px;
+    overflow: hidden;
+    margin-right: 10px;
+    background-color: rgb(250, 250, 250);
+  }
+
+  &__avatar-img {
+    width: 100%;
+    object-fit: cover;
+  }
+
+  &__inner {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__name {
+    font-weight: 600;
+  }
+
+  &__city span {
+    font-weight: 600;
+  }
+}
+
+.post {
+  &__container {
+    max-width: 700px;
+    margin: 20px auto;
+    padding: 10px 10px 0 10px;
+  }
+}
