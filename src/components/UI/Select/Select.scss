@@ -1,0 +1,51 @@
+.select {
+  position: relative;
+
+  &__current {
+    border-radius: 5px;
+    padding: 5px 10px;
+    background-color: teal;
+    color: #fff;
+    cursor: pointer;
+    transition: all 200ms ease-in-out;
+
+    &:hover {
+      background-color: darkcyan;
+    }
+
+    &:active {
+      transform: scale(0.9);
+    }
+  }
+
+  &__options {
+    display: none;
+    position: absolute;
+    box-shadow: 0 0 10px #eee;
+    border-radius: 10px;
+  }
+
+  &__options.active {
+    display: block;
+    position: absolute;
+    top: 40px;
+    background-color: #fff;
+    z-index: 1;
+  }
+
+  &__item {
+    padding: 5px 26px 5px 3px;
+    cursor: pointer;
+
+    &:hover {
+      transition: 100ms linear;
+      background-color: #eee;
+    }
+  }
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background-color: #17171754;
+}
