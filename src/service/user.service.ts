@@ -1,6 +1,6 @@
-import { instance } from '../api'
-import { IPost } from '../interface/posts.interface.ts'
-import { IUser } from '../interface/users.interface.tsx'
+import {instance} from '../api'
+import {IPost} from '../interface/posts.interface.ts'
+import {IUser} from '../interface/users.interface.tsx'
 
 export class UserService {
   static async getAll() {
@@ -8,7 +8,7 @@ export class UserService {
     return response
   }
 
-  static async getById(id: string | undefined) {
+  static async getById(id: number | undefined) {
     const response = await instance<IUser[]>(`/users/${id}`)
     return response
   }

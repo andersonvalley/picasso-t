@@ -10,7 +10,7 @@ interface createComment {
 }
 
 interface Props {
-  comments: IComment[]
+  comments: IComment[] | undefined
   commentInputsValue: createComment
   setCommentInputsValue: (type: createComment) => void
   sendCommentHandler: (e: React.FormEvent) => void
@@ -63,7 +63,7 @@ export const Comments: FC<Props> = ({
       </div>
 
       <ul className="comments__list">
-        {comments.map(item => {
+        {comments?.map(item => {
           return (
             <li className="comments__item" key={item.id}>
               <div className="author post__container">

@@ -4,6 +4,10 @@
     background-color: #fbfbfb;
   }
 
+  &__list {
+    transition: all 200ms ease-in-out;
+  }
+
   &__body .post {
     background-color: #fbfbfb;
 
@@ -12,15 +16,26 @@
     }
   }
 
+  .post {
+    margin: 0;
+    padding: 0 20px 5px 20px;
+  }
+
   &__title {
     font-weight: 600;
   }
 
   &__create {
-    display: none;
+    opacity: 0;
+    visibility: hidden;
+    height: 0;
 
     &.active {
-      display: flex;
+      transition: 400ms ease-in-out;
+      visibility: visible;
+      opacity: 1;
+      position: static;
+      height: fit-content;
     }
   }
 

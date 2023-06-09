@@ -8,7 +8,7 @@ interface Props {
   defaultValue?: string
   isLoading?: boolean
   error?: string
-  users: IUser[]
+  users: IUser[] | undefined
   currentUser: IUser | null
   setCurrentUser: (item: IUser | null) => void
 }
@@ -47,7 +47,7 @@ export const Select: FC<Props> = ({
           <li onClick={() => chooseUserHandler(null)} className="select__item">
             {defaultValue}
           </li>
-          {users.map(item => {
+          {users?.map(item => {
             return (
               <li onClick={() => chooseUserHandler(item)} key={item.id} className="select__item">
                 {item.name}

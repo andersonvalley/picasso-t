@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react'
 import { useFetching } from '../../../hooks/useFetching'
-import { IPost } from '../../../interface/posts.interface.ts'
 import { IUser } from '../../../interface/users.interface.tsx'
-import { PostService } from '../../../service/posts.service'
 import { UserService } from '../../../service/user.service.ts'
-import { OnePost } from './PosrItem/OnePost.tsx'
+import { OnePost } from './PostItem/OnePost.tsx'
 
+import { IPost } from '../../../interface/posts.interface.ts'
+import { PostService } from '../../../service/posts.service.ts'
 import { Loader } from '../../UI/Loader/Loader.tsx'
 import { Select } from '../../UI/Select/Select.tsx'
 import './Posts.scss'
@@ -19,28 +19,28 @@ export const AllPosts = () => {
     error: errorPosts,
     isLoading: isLoadingPosts,
     setData: setPostsByUserId,
-  } = useFetching<IPost>(() => PostService.getAll())
+  } = useFetching<IPost[]>()
 
-  const { fetching: fetchingUsers, data: users } = useFetching<IUser>(() => UserService.getAll())
+  const { fetching: fetchingUsers, data: users } = useFetching<IUser[]>()
 
   const {
     fetching: fetchingUserPosts,
     data: userPosts,
     error: errosUserPosts,
     isLoading: isLoadingUserPosts,
-  } = useFetching<IPost>(() => UserService.getUserPosts(currentUser?.id))
+  } = useFetching<IPost[]>()
 
   useEffect(() => {
-    fetchingUsers()
+    fetchingUsers(() => UserService.getAll())
   }, [])
 
   useEffect(() => {
     if (!currentUser?.id) {
-      fetchingPosts()
+      fetchingPosts(() => PostService.getAll())
       return
     }
 
-    fetchingUserPosts('Посты пользователя получены')
+    fetchingUserPosts(() => UserService.getUserPosts(currentUser?.id), 'Посты пользователя получены')
   }, [currentUser])
 
   useEffect(() => {
@@ -70,7 +70,7 @@ export const AllPosts = () => {
           {errosUserPosts && <p className="error">{errosUserPosts}</p>}
 
           <div className="posts__list animate">
-            {posts.map(item => {
+            {posts?.map(item => {
               return <OnePost key={item.id} {...item} />
             })}
           </div>

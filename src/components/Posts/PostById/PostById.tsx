@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { useFetching } from '../../../hooks/useFetching'
-import { IComment } from '../../../interface/comments.interface'
-import { IPost } from '../../../interface/posts.interface'
-import { IUser } from '../../../interface/users.interface'
 import { CommentService } from '../../../service/comments.service'
 import { PostService } from '../../../service/posts.service'
-import { UserService } from '../../../service/user.service'
 import { notify } from '../../../utils/notification'
 import { Comments } from '../../Comments/Comments'
 import { Loader } from '../../UI/Loader/Loader'
 
 import avatar from '../../../assets/avatar.png'
+import { IComment } from '../../../interface/comments.interface.ts'
+import { IPost } from '../../../interface/posts.interface.ts'
+import { IUser } from '../../../interface/users.interface.ts'
+import { UserService } from '../../../service/user.service.ts'
 import './PostById.scss'
 
 export const PostById = () => {
@@ -26,27 +26,25 @@ export const PostById = () => {
     data: post,
     error: errorPost,
     isLoading: isLoadingPost,
-  } = useFetching<IPost>(() => PostService.getById(id))
+  } = useFetching<IPost>()
 
-  const { fetching: fetchingUser, data: userData } = useFetching<IUser>(() =>
-    UserService.getById(post?.userId)
-  )
+  const { fetching: fetchingUser, data: userData } = useFetching<IUser>()
 
   const {
     fetching: fetchingComments,
     data: commentsData,
     setData: fakeUpdateComments,
-  } = useFetching<IComment>(() => CommentService.getCommentsById(post?.id))
+  } = useFetching<IComment[]>()
 
   useEffect(() => {
     if (!id) return
-    fetchingPost('Получен пост')
+    fetchingPost(() => PostService.getById(id), 'Получен пост')
   }, [])
 
   useEffect(() => {
     if (!post?.userId) return
-    fetchingUser('Получены данные пользователя')
-    fetchingComments()
+    fetchingUser(() => UserService.getById(post?.userId), 'Получены данные пользователя')
+    fetchingComments(() => CommentService.getCommentsById(post?.id))
 
     notify('Получены комментарии')
   }, [post])
@@ -63,6 +61,7 @@ export const PostById = () => {
     const response = await CommentService.createComment(post?.id, comment)
 
     if (response.status === 201) {
+      if (!commentsData) return
       fakeUpdateComments([response.data, ...commentsData])
       notify('Комментарий отправлен')
     } else {

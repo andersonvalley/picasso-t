@@ -4,6 +4,10 @@
     text-align: center;
     background: center center / cover no-repeat rgb(241, 246, 248);
     margin-bottom: 30px;
+
+    @media (max-width: 600px) {
+      padding: 3rem;
+    }
   }
 
   &__list {

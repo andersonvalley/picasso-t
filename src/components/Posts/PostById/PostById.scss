@@ -1,10 +1,19 @@
 .author {
   display: flex;
+  align-items: center;
   justify-content: space-between;
+
+  @media (max-width: 600px) {
+    flex-direction: column;
+  }
 
   &__info {
     display: flex;
     align-items: center;
+
+    @media (max-width: 600px) {
+      margin-bottom: 10px;
+    }
   }
 
   &__avatar {
@@ -14,6 +23,10 @@
     overflow: hidden;
     margin-right: 10px;
     background-color: rgb(250, 250, 250);
+  }
+
+  &__email {
+    word-break: break-all;
   }
 
   &__avatar-img {
@@ -40,5 +53,9 @@
     max-width: 700px;
     margin: 20px auto;
     padding: 10px 10px 0 10px;
+
+    .author__info {
+      justify-content: space-between;
+    }
   }
 }
