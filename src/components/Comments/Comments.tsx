@@ -36,6 +36,7 @@ export const Comments: FC<Props> = ({
 
   return (
     <div className="comments">
+      <b className="comments__title">Комментарии</b>
       <button onClick={commentHandler} className="btn">
         {createComments ? 'Отменить' : 'Написать комментарий'}
       </button>

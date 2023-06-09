@@ -13,6 +13,7 @@
 
     @media (max-width: 600px) {
       margin-bottom: 10px;
+      align-items: baseline;
     }
   }
 
@@ -56,6 +57,11 @@
 
     .author__info {
       justify-content: space-between;
+      // width: 100%;
     }
   }
+}
+
+.comments__item .author__info {
+  width: 100%;
 }
